@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Message from "./Message";
 
 const SimpleForm = () => {
   const [formState, setFormState] = useState({
@@ -45,6 +46,7 @@ const SimpleForm = () => {
           className="form-control"
         />
       </div>
+      {name === "123" && <Message />}
     </div>
   );
 };
