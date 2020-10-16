@@ -16,19 +16,15 @@ export const useFetch = (url) => {
 
     fetch(url)
       .then((resp) => resp.json())
-      .then((data) =>
-        setTimeout(() => {
-          if (isMounted.current) {
-            setData({
-              data,
-              loading: false,
-              error: false,
-            });
-          } else {
-            console.log("el setData no se llamó");
-          }
-        }, 2000)
-      );
+      .then((data) => {
+        if (isMounted.current) {
+          setData({
+            data,
+            loading: false,
+            error: false,
+          });
+        }
+      });
   }, [url]);
 
   return data;
