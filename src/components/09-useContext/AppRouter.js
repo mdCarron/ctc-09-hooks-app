@@ -19,7 +19,7 @@ const AppRouter = () => {
           <Route component={HomeScreen} exact path="/" />
           <Route component={LoginScreen} path="/login" />
           <Route component={AboutScreen} path="/about" />
-          <Redirect component={HomeScreen} />
+          <Redirect component={HomeScreen} to="./" />
         </Switch>
       </div>
     </Router>
