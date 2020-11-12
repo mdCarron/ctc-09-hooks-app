@@ -8,17 +8,27 @@ const initialState = [
     description: "aprender react js",
     done: false,
   },
-  {
-    id: new Date().getTime(),
-    description: "terminar lección 11 de cero a experto",
-    done: false,
-  },
 ];
 
 const TodoApp = () => {
-  const [todos] = useReducer(todoReducer, initialState);
+  const [todos, dispatch] = useReducer(todoReducer, initialState);
 
-  console.log(todos);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newTodo = {
+      id: new Date().getTime(),
+      description: "terminar lección 11 de cero a experto",
+      done: false,
+    };
+
+    const action = {
+      type: "add",
+      payload: newTodo,
+    };
+
+    dispatch(action);
+  };
 
   return (
     <div className="container">
@@ -28,7 +38,7 @@ const TodoApp = () => {
         <div className="col-sm-12 col-md-4">
           <h3>Agregar Tarea</h3>
           <hr />
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               name="description"
@@ -36,7 +46,10 @@ const TodoApp = () => {
               autoComplete="off"
               className="form-control my-2"
             />
-            <button className="btn btn-outline-success btn-block my-2">
+            <button
+              type="submit"
+              className="btn btn-outline-success btn-block my-2"
+            >
               Agregar
             </button>
           </form>
