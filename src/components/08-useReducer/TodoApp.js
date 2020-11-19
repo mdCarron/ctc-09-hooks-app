@@ -1,24 +1,32 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import { todoReducer } from "./todoReducer";
 import "./TodoApp.css";
+import useForm from "../../hooks/useForm";
 
-const initialState = [
-  {
-    id: new Date().getTime(),
-    description: "aprender react js",
-    done: false,
-  },
-];
+const init = () => {
+  return JSON.parse(localStorage.getItem("todos")) || [];
+};
 
 const TodoApp = () => {
-  const [todos, dispatch] = useReducer(todoReducer, initialState);
+  const [todos, dispatch] = useReducer(todoReducer, [], init);
+  const [{ description }, handleInputChange, reset] = useForm({
+    description: "",
+  });
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (description.trim() <= 1) {
+      return;
+    }
+
     const newTodo = {
       id: new Date().getTime(),
-      description: "terminar lección 11 de cero a experto",
+      desc: description,
       done: false,
     };
 
@@ -28,6 +36,7 @@ const TodoApp = () => {
     };
 
     dispatch(action);
+    reset();
   };
 
   return (
@@ -45,6 +54,8 @@ const TodoApp = () => {
               placeholder="Nueva Tarea..."
               autoComplete="off"
               className="form-control my-2"
+              onChange={handleInputChange}
+              value={description}
             />
             <button
               type="submit"
@@ -62,7 +73,7 @@ const TodoApp = () => {
                 className="list-group-item d-flex justify-content-between align-items-center"
               >
                 <p className="">
-                  <b>{i + 1}.</b> {todo.description}
+                  <b>{i + 1}.</b> {todo.desc}
                 </p>
                 <button className="btn btn-danger">Borrar</button>
               </li>
