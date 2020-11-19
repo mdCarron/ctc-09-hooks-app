@@ -1,3 +1,7 @@
-.complete {
+.completed {
   text-decoration: line-through;
+}
+
+li p {
+  cursor: pointer;
 }

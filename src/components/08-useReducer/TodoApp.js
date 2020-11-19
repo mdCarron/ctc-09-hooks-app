@@ -18,15 +18,18 @@ const TodoApp = () => {
   }, [todos]);
 
   const handleDelete = (todoId) => {
-    console.log(todoId);
-
-    // crear la action
     const action = {
       type: "delete",
       payload: todoId,
     };
-    // dispatch
     dispatch(action);
+  };
+
+  const handleToggle = (todoId) => {
+    dispatch({
+      type: "toggle",
+      payload: todoId,
+    });
   };
 
   const handleSubmit = (e) => {
@@ -69,7 +72,7 @@ const TodoApp = () => {
               onChange={handleInputChange}
               value={description}
             />
-            <button type="submit" className="btn btn -success btn-block my-2">
+            <button type="submit" className="btn btn-success btn-block my-2">
               Agregar
             </button>
           </form>
@@ -81,7 +84,10 @@ const TodoApp = () => {
                 key={todo.id}
                 className="list-group-item d-flex justify-content-between align-items-center"
               >
-                <p className="">
+                <p
+                  className={`${todo.done && "completed"}`}
+                  onClick={() => handleToggle(todo.id)}
+                >
                   <b>{i + 1}.</b> {todo.desc}
                 </p>
                 <button
