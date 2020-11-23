@@ -24,6 +24,13 @@ export const useFetch = (url) => {
             error: false,
           });
         }
+      })
+      .catch(() => {
+        setData({
+          data: null,
+          loading: false,
+          error: "Error en el fetch, informacion no disponible.",
+        });
       });
   }, [url]);
 
