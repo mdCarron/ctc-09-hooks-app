@@ -8,7 +8,7 @@ describe("todoReducer.js", () => {
   });
 
   test("should return NEW todo", () => {
-    const newTodo = { id: 3, description: "Aprender Node.js", done: false };
+    const newTodo = { id: 3, desc: "Aprender Node.js", done: false };
     const newAction = {
       type: "add",
       payload: newTodo,
